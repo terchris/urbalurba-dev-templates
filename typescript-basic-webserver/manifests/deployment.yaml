@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: typescript-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: typescript-web
+  template:
+    metadata:
+      labels:
+        app: typescript-web
+    spec:
+      containers:
+        - name: typescript-web
+          image: ghcr.io/{{GITHUB_USERNAME}}/typescript-basic-webserver:latest
+          ports:
+            - containerPort: 3000
+# minimal resources as this is just a test            
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: typescript-web
+spec:
+  selector:
+    app: typescript-web
+  ports:
+    - port: 80
+      targetPort: 3000
