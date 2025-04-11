@@ -1,36 +1,47 @@
-name: Build and Push
+# GitHub Actions workflow for building and pushing the Docker image
+# 
+# Template variables:
+# {{GITHUB_USERNAME}} - Will be replaced with the GitHub username from the repository URL
+# {{REPO_NAME}} - Will be replaced with the actual repository name
+#
+# This file is automatically configured during project initialization
+# It performs the following steps:
+# 1. Checks out the code
+# 2. Sets up Node.js environment
+# 3. Installs dependencies and builds the application
+# 4. Authenticates with GitHub Container Registry
+# 5. Builds and pushes the Docker image to ghcr.io/{{GITHUB_USERNAME}}/{{REPO_NAME}}:latest
 
+name: Build and Push
 on:
   push:
     branches: [main]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
+      
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-
+      
       - name: Install dependencies
         run: npm ci
-
+      
       - name: Build
         run: npm run build
-
+      
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
+      
       - name: Build and push Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}:latest .
-          docker push ghcr.io/${{ github.repository }}:latest
+          docker build -t ghcr.io/{{GITHUB_USERNAME}}/{{REPO_NAME}}:latest .
+          docker push ghcr.io/{{GITHUB_USERNAME}}/{{REPO_NAME}}:latest
