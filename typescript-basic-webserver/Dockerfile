@@ -1,4 +1,7 @@
-FROM node:18-alpine
+# filename: typescript-basic-webserver/Dockerfile
+# This Dockerfile is for a simple typescript web application
+
+FROM node:20-slim
 
 WORKDIR /app
 COPY package*.json ./
