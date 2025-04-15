@@ -183,27 +183,6 @@ We do this by adding the app/repository name to the local hosts file. This so th
 
 This is done once for each project. And the scripts must be run from the host machine, not from inside the devcontainer.
 
-```mermaid
-flowchart LR
-    subgraph "Host Machine"
-        dns[setup-local-dns.sh/bat]
-        hosts["etc-hosts"]
-    end
-    
-    subgraph "provision-host Container"
-        query[kubectl query]
-    end
-    
-    subgraph "Kubernetes Cluster"
-        traefik[Traefik Service]
-    end
-    
-    dns -->|Run container| query
-    query -->|Get IP| traefik
-    query -->|Return IP| dns
-    dns -->|Update| hosts
-```
-
 - From the host machine, developer runs `./urbalurba-scripts/setup-local-dns.sh` (or `.bat` on Windows)
 - This adds a local DNS entry pointing to the application
 - Developer can now access the app at `http://<repo-name>.local` in their browser
@@ -220,7 +199,9 @@ When the developer want to test how the code will run in a production-like envir
 
 When a solution is ready for sharing or evaluation by central IT, the code is already in a structured, familiar format that follows best practices and GitOps workflow.
 
-## Implementation Details
+## Technical Details
+
+As developer you dont need to read this. But if you are interested in how the system works, this section describes the technical details of the system.
 
 ### Folder Structure
 
@@ -295,7 +276,7 @@ These scripts configure the developer's machine to access the application throug
 flowchart LR
     subgraph "Host Machine"
         dns[setup-local-dns.sh/bat]
-        hosts["/etc/hosts"]
+        hosts["etc-hosts"]
     end
     
     subgraph "provision-host Container"
@@ -315,6 +296,7 @@ flowchart LR
 TODO: verify this
 
 **Key workflow:**
+
 1. The host script runs the provision-host container to query Traefik's IP address
 2. It adds or updates an entry in the hosts file mapping `<repo-name>.local` to that IP
 
