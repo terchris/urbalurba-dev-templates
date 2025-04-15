@@ -1,4 +1,4 @@
-# filename: typescript-basic-webserver/.github/workflows/urbalurba-build-and-push.yaml
+# filename: templates/typescript-basic-webserver/.github/workflows/urbalurba-build-and-push.yaml
 # GitHub Actions workflow for building and pushing the Docker image
 # 
 # Template variables:

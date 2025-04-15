@@ -1,4 +1,0 @@
-# filename: typescript-basic-webserver/manifests/kustomization.yaml
-# <what?>
-resources:
-  - deployment.yaml

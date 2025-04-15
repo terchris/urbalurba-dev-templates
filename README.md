@@ -215,24 +215,29 @@ There are several templates for different types of applications. The folder stru
 
 ```plaintext
 project-repository/
-├── .github/workflows/           # GitHub Actions workflows
-│   └── urbalurba-build-and-push.yaml
-├── app/                         # Application code
-│   └── index.ts
-├── manifests/                   # Kubernetes manifests for ArgoCD
-│   ├── deployment.yaml
-│   ├── ingress.yaml
-│   └── kustomization.yaml
-├── urbalurba-scripts/           # Utility scripts for platform integration
-│   ├── register-argocd.sh       # macOS/Linux registration script
-│   ├── register-argocd.bat      # Windows registration script
-│   ├── setup-local-dns.sh       # macOS/Linux DNS setup
-│   ├── setup-local-dns.bat      # Windows DNS setup
-│   ├── check-deployment.sh      # macOS/Linux deployment status
-│   └── check-deployment.bat     # Windows deployment status
-├── Dockerfile                   # Container definition
-├── package.json
-├── tsconfig.json
+├── provision-host/              # Container for cluster management
+│   └── register-app.sh         # Application registration script
+├── templates/                  # Project templates
+│   └── typescript-basic-webserver/
+│       ├── app/               # Application code
+│       │   └── index.ts
+│       ├── manifests/         # Kubernetes manifests for ArgoCD
+│       │   ├── deployment.yaml
+│       │   ├── ingress.yaml   # Traefik ingress configuration
+│       │   └── kustomization.yaml
+│       ├── Dockerfile         # Container definition
+│       ├── package.json
+│       ├── package-lock.json
+│       ├── tsconfig.json
+│       └── README-typescript-basic-webserver.md
+├── urbalurba-scripts/         # Utility scripts for platform integration
+│   ├── register-argocd.sh     # macOS/Linux registration script
+│   ├── register-argocd.bat    # Windows registration script
+│   ├── setup-local-dns.sh     # macOS/Linux DNS setup
+│   ├── setup-local-dns.bat    # Windows DNS setup
+│   ├── check-deployment.sh    # macOS/Linux deployment status
+│   └── check-deployment.bat   # Windows deployment status
+├── LICENSE
 └── README.md
 ```
 

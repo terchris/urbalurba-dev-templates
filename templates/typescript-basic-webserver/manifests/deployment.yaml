@@ -1,4 +1,4 @@
-# filename: typescript-basic-webserver/manifests/deployment.yaml
+# filename: templates/typescript-basic-webserver/manifests/deployment.yaml
 # Kubernetes deployment configuration for the typescript web application
 # Template variables:
 # {{GITHUB_USERNAME}} - Will be replaced with the GitHub username from the repository URL

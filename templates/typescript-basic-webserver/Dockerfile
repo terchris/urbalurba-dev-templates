@@ -1,4 +1,4 @@
-# filename: typescript-basic-webserver/Dockerfile
+# filename: templates/typescript-basic-webserver/Dockerfile
 # This Dockerfile is for a simple typescript web application
 
 FROM node:20-slim
