@@ -1,5 +1,5 @@
 # filename: templates/typescript-basic-webserver/manifests/ingress.yaml
-# Kubernetes ingress configuration for the typescript web application
+# Kubernetes ingress configuration for the web application
 # Template variables:
 # {{GITHUB_USERNAME}} - Will be replaced with the GitHub username from the repository URL
 # {{REPO_NAME}} - Will be replaced with the actual repository name
@@ -9,7 +9,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: typescript-web-ingress
+  name: "{{REPO_NAME}}-ingress"
+  labels:
+    app: "{{REPO_NAME}}"
+    owner: "{{GITHUB_USERNAME}}"
   annotations:
     kubernetes.io/ingress.class: "traefik"
     # Enable TLS with self-signed certificate for local development
@@ -23,7 +26,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: typescript-web
+                name: "{{REPO_NAME}}-service"
                 port:
                   number: 80
   # Configure TLS (optional for local development)

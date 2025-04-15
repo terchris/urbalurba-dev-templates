@@ -1,5 +1,5 @@
 # filename: templates/typescript-basic-webserver/manifests/deployment.yaml
-# Kubernetes deployment configuration for the typescript web application
+# Kubernetes deployment configuration for the web application
 # Template variables:
 # {{GITHUB_USERNAME}} - Will be replaced with the GitHub username from the repository URL
 # {{REPO_NAME}} - Will be replaced with the actual repository name
@@ -9,19 +9,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: typescript-web
+  name: "{{REPO_NAME}}-deployment"
+  labels:
+    app: "{{REPO_NAME}}"
+    owner: "{{GITHUB_USERNAME}}"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: typescript-web
+      app: "{{REPO_NAME}}"
   template:
     metadata:
       labels:
-        app: typescript-web
+        app: "{{REPO_NAME}}"
     spec:
       containers:
-        - name: typescript-web
+        - name: "{{REPO_NAME}}"
           image: ghcr.io/{{GITHUB_USERNAME}}/{{REPO_NAME}}:latest
           ports:
             - containerPort: 3000
@@ -37,10 +40,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: typescript-web
+  name: "{{REPO_NAME}}-service"
 spec:
   selector:
-    app: typescript-web
+    app: "{{REPO_NAME}}"
   ports:
     - port: 80
       targetPort: 3000

@@ -238,7 +238,7 @@ project-repository/
 │   ├── check-deployment.sh    # macOS/Linux deployment status
 │   └── check-deployment.bat   # Windows deployment status
 ├── LICENSE
-└── README.md
+└── README.md # This file
 ```
 
 ### urbalurba-scripts Design and Functionality

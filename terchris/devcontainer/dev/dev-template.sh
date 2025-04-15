@@ -10,7 +10,7 @@ set -e
 echo ""
 echo "🛠️  Urbalurba Developer Platform - Project Initializer"
 echo "This script will set up your project with the necessary files and configurations."
-echo "---------------------------------------------------------------------------------"
+echo "-----------------------------------------------------"
 
 # Detect GitHub username and repo
 GITHUB_REMOTE=$(git remote get-url origin)
@@ -135,6 +135,23 @@ echo "Extracting template $TEMPLATE_NAME"
 # Copy all visible files and directories
 cp -r "$TEMPLATE_PATH/"* "$OLDPWD/"
 
+# Copy urbalurba-scripts directory from the repository root
+if [ -d "$TEMPLATE_REPO_NAME/urbalurba-scripts" ]; then
+  echo "Setting up urbalurba-scripts for project integration..."
+  # Create urbalurba-scripts directory if it doesn't exist
+  mkdir -p "$OLDPWD/urbalurba-scripts"
+  
+  # Copy all files from urbalurba-scripts directory
+  cp -r "$TEMPLATE_REPO_NAME/urbalurba-scripts/"* "$OLDPWD/urbalurba-scripts/"
+  
+  # Make sure script files are executable
+  chmod +x "$OLDPWD/urbalurba-scripts/"*.sh 2>/dev/null || true
+  echo "✅ Added urbalurba-scripts"
+else
+  echo "❌ urbalurba-scripts directory not found in template repository"
+  echo "Warning: The project may not function correctly without these scripts"
+fi
+
 # Handle special directories that might be hidden
 # Create .github directory if needed
 if [ -d "$TEMPLATE_PATH/.github" ]; then
@@ -234,24 +251,51 @@ replace_placeholders() {
   return 0
 }
 
-# Update deployment.yaml
-replace_placeholders "manifests/deployment.yaml"
-
-# Look for ingress.yaml and update if it exists
-if [ -f "manifests/ingress.yaml" ]; then
-  replace_placeholders "manifests/ingress.yaml"
+# Process all manifest files
+echo "Processing Kubernetes manifest files..."
+if [ -d "manifests" ]; then
+  # Process each YAML file in the manifests directory
+  for manifest_file in manifests/*.yaml manifests/*.yml; do
+    if [ -f "$manifest_file" ]; then
+      replace_placeholders "$manifest_file"
+    fi
+  done
+else
+  echo "⚠️ No manifests directory found"
 fi
 
-# Update GitHub Actions workflow if it exists
-if [ -f ".github/workflows/urbalurba-build-and-push.yaml" ]; then
-  replace_placeholders ".github/workflows/urbalurba-build-and-push.yaml"
+# Update GitHub Actions workflows
+echo "Processing GitHub Actions workflows..."
+if [ -d ".github/workflows" ]; then
+  for workflow_file in .github/workflows/*.yaml .github/workflows/*.yml; do
+    if [ -f "$workflow_file" ]; then
+      replace_placeholders "$workflow_file"
+    fi
+  done
+else
+  echo "⚠️ No GitHub workflows directory found"
 fi
 
-# Check for any additional files that might need placeholder replacement
-# This could include Dockerfiles, README files, etc.
-if [ -f "Dockerfile" ]; then
-  replace_placeholders "Dockerfile"
-fi
+# Check for other common files that might need placeholder replacement
+echo "Processing additional template files..."
+common_files=("Dockerfile" "docker-compose.yml" "docker-compose.yaml" "README.md" ".env.example" "package.json")
+for file in "${common_files[@]}"; do
+  if [ -f "$file" ]; then
+    replace_placeholders "$file"
+  fi
+done
+
+# Process any other potential template files recursively
+echo "Looking for additional templated files..."
+# Find files with placeholder pattern, excluding certain directories
+template_files=$(find . -type f -not -path "*/node_modules/*" -not -path "*/.git/*" -not -path "*/dist/*" -exec grep -l "{{.*}}" {} \; 2>/dev/null || true)
+for file in $template_files; do
+  # Check if we haven't already processed this file
+  if [[ "$file" != "./manifests/"* && "$file" != "./.github/workflows/"* && "$file" != "./Dockerfile" && "$file" != "./docker-compose.yml" && "$file" != "./docker-compose.yaml" && "$file" != "./README.md" && "$file" != "./.env.example" && "$file" != "./package.json" ]]; then
+    echo "Found additional template file: $file"
+    replace_placeholders "$file"
+  fi
+done
 
 # Cleanup
 echo "Removing template repository folder: $TEMP_DIR"
