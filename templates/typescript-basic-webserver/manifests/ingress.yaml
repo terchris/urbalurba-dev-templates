@@ -19,7 +19,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
-    - host: "{{REPO_NAME}}.local"
+    - host: "{{REPO_NAME}}.localhost"
       http:
         paths:
           - path: /
@@ -32,4 +32,4 @@ spec:
   # Configure TLS (optional for local development)
   tls:
     - hosts:
-        - "{{REPO_NAME}}.local"
+        - "{{REPO_NAME}}.localhost"
