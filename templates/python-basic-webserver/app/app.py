@@ -9,7 +9,7 @@ from flask import Flask
 from datetime import datetime
 
 app = Flask(__name__)
-port = 6000
+port = 3000
 
 @app.route('/')
 def hello_world():

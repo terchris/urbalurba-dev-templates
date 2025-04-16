@@ -27,7 +27,7 @@ spec:
         - name: "{{REPO_NAME}}"
           image: ghcr.io/{{GITHUB_USERNAME}}/{{REPO_NAME}}:latest
           ports:
-            - containerPort: 6000
+            - containerPort: 3000
           # minimal resources as this is just a test            
           resources:
             limits:
@@ -46,4 +46,4 @@ spec:
     app: "{{REPO_NAME}}"
   ports:
     - port: 80
-      targetPort: 6000
+      targetPort: 3000
