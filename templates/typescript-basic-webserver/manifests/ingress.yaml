@@ -1,10 +1,18 @@
 # filename: templates/typescript-basic-webserver/manifests/ingress.yaml
 # Kubernetes ingress configuration for the web application
+#
+# This template has been updated to work properly with Traefik in the Urbalurba environment
+# based on learnings from ArgoCD deployment patterns.
+#
+# Key changes:
+# 1. Changed domain suffix from .local to .localhost for Traefik compatibility
+# 2. Added explicit ingressClassName: "traefik" in spec
+# 3. Added traefik.ingress.kubernetes.io/router.entrypoints: "web" annotation
+# 4. Changed TLS configuration to an empty array for development environments
+#
 # Template variables:
 # {{GITHUB_USERNAME}} - Will be replaced with the GitHub username from the repository URL
 # {{REPO_NAME}} - Will be replaced with the actual repository name
-#
-# This file is automatically configured during project initialization
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -14,12 +22,14 @@ metadata:
     app: "{{REPO_NAME}}"
     owner: "{{GITHUB_USERNAME}}"
   annotations:
-    kubernetes.io/ingress.class: "traefik"
-    # Enable TLS with self-signed certificate for local development
-    traefik.ingress.kubernetes.io/router.tls: "true"
+    kubernetes.io/ingress.class: "traefik"  # Legacy annotation for compatibility
+    traefik.ingress.kubernetes.io/router.entrypoints: "web"  # Explicitly use HTTP entrypoint
+    # Optional TLS configuration - disabled for local development
+    # traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
+  ingressClassName: "traefik"  # Explicit ingressClass reference (required for newer Kubernetes)
   rules:
-    - host: "{{REPO_NAME}}.localhost"
+    - host: "{{REPO_NAME}}.localhost"  # Using .localhost domain for Traefik compatibility
       http:
         paths:
           - path: /
@@ -29,7 +39,6 @@ spec:
                 name: "{{REPO_NAME}}-service"
                 port:
                   number: 80
-  # Configure TLS (optional for local development)
-  tls:
-    - hosts:
-        - "{{REPO_NAME}}.localhost"
+  # Empty TLS array instead of null to prevent default values
+  # This is a specific requirement for certain Traefik implementations
+  tls: []
