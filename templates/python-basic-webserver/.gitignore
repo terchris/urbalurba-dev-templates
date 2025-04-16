@@ -1,0 +1,18 @@
+# filename: templates/python-basic-webserver/.gitignore
+# Files and directories to be excluded from Git version control
+
+# Python specific
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+.env
+.coverage
+htmlcov/
+
+# OS specific
+.DS_Store
