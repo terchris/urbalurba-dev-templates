@@ -129,6 +129,36 @@ flowchart TD
 - An utilities container `provision-host` for managing the local cluster and providing administrative tools.
 - No code or programs are installed you your local machine, all needed tools are installed in the container. Everyone has the same setup, and the setup is the same on all platforms (macOS, Windows, Linux).
 
+### 3. GitHub Authentication Setup
+
+Before developing applications for the platform, you need to set up GitHub authentication. This is required for repository access and container image management (ArgoCD needs it to deploy to the local cluster).
+
+You'll need a GitHub Personal Access Token with appropriate permissions:
+
+1. Go to [GitHub's Personal Access Tokens page](https://github.com/settings/tokens)
+2. Click "Generate new token" → "Generate new token (classic)"
+3. Name your token in the Note: field "Urbalurba Infrastructure"
+4. Expiration: Select "No expiration" (or preferably a suitable expiration date)
+5. Select scopes: `repo` and `write:packages`
+6. Click "Generate token" and copy it immediately (it will only be shown once)
+
+For detailed instructions, see the [official GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
+
+Keep the token secure and do not share it with anyone. It is used to authenticate your GitHub account and access your repositories.
+You can set it as an environment variable in your shell like this:
+
+```bash
+export GITHUB_PAT=your_personal_access_token
+```
+
+Check that the token is set correctly:
+
+```bash
+echo $GITHUB_PAT
+```
+
+Set the GITHUB_PAT on your host machine, not inside the devcontainer. The token is used by the `provision-host` container to authenticate with GitHub and deploy the application to the local Kubernetes cluster.
+
 ## Setting up for local development
 
 ### Initiating a new project
@@ -169,6 +199,7 @@ We use GitHub Actions to build and push the container image to the GitHub Contai
 - This triggers the GitHub Actions workflow
 - The workflow builds the container image and pushes it to the GitHub Container Registry
 - The developer go to the GitHub Actions web page and verify the status of the build.
+- If you set up the gh CLI you can also check the status of the build from the command line: `gh run list`
 
 #### 6. Deploy app to test environment
 
@@ -204,6 +235,45 @@ When the developer want to test how the code will run in a production-like envir
 #### 9. Sharing and Handover to production
 
 When a solution is ready for sharing or evaluation by central IT, the code is already in a structured, familiar format that follows best practices and GitOps workflow.
+
+#### 10. Set up GitHub CLI (Optional but Recommended)
+
+Do this inside the devcontainer.
+
+The GitHub CLI allows you to interact with GitHub from the command line. It is by far simpler to run an command instead of opening a web page to check a status. So if you prefer working on the commandline than this is a must have.
+
+Start authentication:
+
+```bash
+gh auth login
+```
+
+You will be prompted for several options. Yhis is how I do it:
+
+```plaintext
+? What account do you want to log into? GitHub.com
+? What is your preferred protocol for Git operations? HTTPS
+? Authenticate Git with your GitHub credentials? Yes
+? How would you like to authenticate GitHub CLI? Login with a web browser
+
+! First copy your one-time code: 4953-4F56
+Press Enter to open github.com in your browser... 
+✓ Authentication complete.
+- gh config set -h github.com git_protocol https
+✓ Configured git protocol
+✓ Logged in as terchris
+```
+
+After authenticating, you can use CLI commands to manage your repositories:
+
+List your repositories:
+
+```bash
+gh repo list
+```
+
+This setup will make it easier to monitor your GitHub Actions workflows and troubleshoot issues during deployment.
+See [GitHub CLI documentation](https://cli.github.com/manual/) for more information.
 
 ## Technical Details
 
