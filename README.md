@@ -157,7 +157,7 @@ Check that the token is set correctly:
 echo $GITHUB_PAT
 ```
 
-Set the GITHUB_PAT on your host machine, not inside the devcontainer. The token is used by the `provision-host` container to authenticate with GitHub and deploy the application to the local Kubernetes cluster.
+Set the GITHUB_PAT on your host machine, not inside the devcontainer. The token is used by the `provision-host` container to authenticate with GitHub and deploy the application to the local Kubernetes cluster. Keep it safe, you might need it next time you create a new project. 
 
 ## Setting up for local development
 

@@ -1,0 +1,96 @@
+# filename: templates/csharp-basic-webserver/.github/workflows/urbalurba-build-and-push.yaml
+# 
+# GitHub Actions workflow for building and pushing Docker images with unique tags
+# and updating Kubernetes manifests for GitOps with ArgoCD
+#
+# This workflow solves the problem of ArgoCD not detecting new image builds
+# when using the same image tag (like "latest"). Instead, it:
+#
+# 1. Generates a unique tag using commit SHA and timestamp
+# 2. Builds and pushes the image with this unique tag 
+# 3. Updates the Kubernetes manifest with the new tag
+# 4. Commits the updated manifest back to the repository
+#
+# The workflow includes safeguards to prevent infinite build loops:
+# - Ignores changes to files in the manifests/ directory 
+# - Adds [ci-skip] to commit messages for automated changes
+# - Checks if the commit was made by GitHub Actions
+#
+# REQUIREMENTS:
+# - Repository needs write permissions for GitHub token (for pushing changes back)
+# - Kubernetes manifests must be in a "manifests" directory with deployment.yaml
+# - Image reference in deployment.yaml should follow the pattern:
+#   image: ghcr.io/username/repo-name:tag
+
+
+name: Build and Push
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'manifests/**'  # Ignore changes to manifest files to prevent workflow loops
+
+permissions:
+  contents: write  # Needed for pushing manifest changes back to repository
+  packages: write  # Needed for pushing to GitHub Container Registry      
+
+
+env:
+  REGISTRY: ghcr.io  # GitHub Container Registry
+  IMAGE_NAME: ${{ github.repository_owner }}/${{ github.event.repository.name }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # Use token for pushing changes
+      
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x  # Matches devcontainer version
+
+      - name: Restore NuGet packages
+        run: dotnet restore src/WebApplication/WebApplication.csproj
+        # Equivalent to 'pip install -r requirements.txt'
+
+      - name: Publish Application
+        run: |
+          dotnet publish src/WebApplication/WebApplication.csproj \
+            -c Release \
+            -o published \
+            --no-restore \  # Leverages cached restore
+            -p:AssemblyVersion=${{ github.run_number }} \  # Embed CI run number
+            -p:InformationalVersion=${{ github.sha }}  # Commit SHA in metadata
+
+      - name: Prepare Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha  # Immutable SHA-based tag
+            type=ref,event=branch  # Dynamic branch tag
+
+      - name: Build and Push Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha  # GitHub Actions cache
+          cache-to: type=gha,mode=max
+          # Matches Python template's caching strategy
+
+      - name: Process Kubernetes Manifests
+        run: |
+          # Replace template variables in manifests
+          sed -i "s/{{GITHUB_USERNAME}}/${{ github.repository_owner }}/g" manifests/*
+          sed -i "s/{{REPO_NAME}}/${{ github.event.repository.name }}/g" manifests/*
+        if: always()  # Run even if previous steps fail

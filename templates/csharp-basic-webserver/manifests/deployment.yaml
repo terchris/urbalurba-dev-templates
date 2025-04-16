@@ -1,0 +1,50 @@
+# filename: templates/csharp-basic-webserver/manifests/deployment.yaml
+# Kubernetes deployment configuration for ASP.NET Core application
+# Key differences from Python version:
+# - Container port changed to 80 (ASP.NET Core default in container)
+# - Removed explicit owner labels (handled in kustomization.yaml)
+# - Image remains GHCR-based to match CI/CD workflow
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{REPO_NAME}}-deployment"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "{{REPO_NAME}}"
+  template:
+    metadata:
+      labels:
+        app: "{{REPO_NAME}}"
+    spec:
+      containers:
+        - name: "{{REPO_NAME}}"
+          image: ghcr.io/{{GITHUB_USERNAME}}/{{REPO_NAME}}:latest
+          ports:
+            - containerPort: 80  # Matches ASP.NET Core's internal port
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+          # ASP.NET Core specific health checks could be added here
+          # livenessProbe:
+          #   httpGet:
+          #     path: /healthz
+          #     port: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{REPO_NAME}}-service"
+spec:
+  selector:
+    app: "{{REPO_NAME}}"
+  ports:
+    - port: 80
+      targetPort: 80  # Direct port mapping (no translation needed)
