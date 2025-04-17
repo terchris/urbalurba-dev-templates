@@ -36,9 +36,9 @@ permissions:
   packages: write  # Needed for pushing to GitHub Container Registry      
 
 
-env:
-  REGISTRY: ghcr.io  # GitHub Container Registry
-  IMAGE_NAME: ${{ github.repository_owner }}/${{ github.event.repository.name }}
+#env:
+#  REGISTRY: ghcr.io  # GitHub Container Registry
+#  IMAGE_NAME: ${{ github.repository_owner }}/${{ github.event.repository.name }}
 
 jobs:
   build-and-push:

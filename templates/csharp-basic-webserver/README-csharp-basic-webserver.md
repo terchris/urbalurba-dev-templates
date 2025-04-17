@@ -34,11 +34,19 @@ dotnet watch run --project src/WebApplication
 You will see the following output:
 
 ```plaintext
-Building...
+dotnet watch 🔥 Hot reload enabled. For a list of supported edits, see https://aka.ms/dotnet/hot-reload.
+  💡 Press "Ctrl + R" to restart.
+dotnet watch 🔧 Building...
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  WebApplication -> /workspace/src/WebApplication/bin/Debug/net8.0/WebApplication.dll
+dotnet watch 🚀 Started
 info: Microsoft.Hosting.Lifetime[14]
       Now listening on: http://0.0.0.0:3000
 info: Microsoft.Hosting.Lifetime[0]
       Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
 ````
 
 The server runs on port 3000. Access it at http://localhost:3000 in your browser to see:
