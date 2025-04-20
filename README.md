@@ -11,13 +11,39 @@ A developer should be free to write code and not worry about the underlying infr
 Urbalurba-infrastructure sets up a local kubernetes cluster that follow the latest GitOps principles and provides a set of tools that makes it easy to develop, test and deploy applications.
 Providing a seamless developer experience consistent with latest tooling and workflows.
 
+## Available Templates
+
+| Template Type | TypeScript | Python | Java | C# | Go | PHP |
+|--------------|------------|--------|------|----|----|-----|
+| **Basic Web Server** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Simple Database Integration** | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
+| **Database Integration** | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
+| **Message Queue** | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
+| **Serverless Functions** | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
+| **Object Storage** | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
+
+## Template Features
+
+| Template Type | Features | Description |
+|--------------|----------|-------------|
+| **Basic Web Server** | • Web page<br>• Local dev<br>• K8s deploy | A simple web server template that includes:<br>• Displays template name, current time, and "Hello World"<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Simple Database Integration** | • [SQLite](https://www.sqlite.org/)<br>• CRUD<br>• K8s deploy | Templates that include:<br>• [SQLite](https://www.sqlite.org/) database integration<br>• Create, Read, Update, Delete operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Database Integration** | • [Postgres](https://www.postgresql.org/)<br>• CRUD<br>• K8s deploy | Templates that include:<br>• [PostgreSQL](https://www.postgresql.org/) database integration using local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• Create, Read, Update, Delete operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Message Queue** | • [Dapr](https://dapr.io/)<br>• Service-independent<br>• K8s deploy | Templates that implement:<br>• [Dapr](https://dapr.io/) integration with [RabbitMQ](https://www.rabbitmq.com/) in local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• Service-independent messaging (RabbitMQ, Kafka, Azure Service Bus, etc.)<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Serverless Functions** | • [Knative](https://knative.dev/)<br>• Auto-scale<br>• K8s deploy | Templates that implement:<br>• [Knative Functions](https://knative.dev/) for serverless execution<br>• Automatic scaling and event-driven architecture<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Object Storage** | • [MinIO](https://min.io/)<br>• S3-compatible<br>• K8s deploy | Templates that implement:<br>• [MinIO](https://min.io/) object storage in local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• S3-compatible API for file operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+
+## Legend
+- ✅ Available
+- 🔜 Coming Soon
+
 ### Case: Red Cross Norway volunteer developer platform
 
 The Norwegian Red Cross supports over **40,000 volunteers** across **380+ local branches**, many of whom have technical skills and see opportunities for IT improvements. This solution creates a streamlined path for these volunteers to develop, test, and contribute IT solutions that can ultimately be adopted by the organization, enabling a better flow from volunteer innovation to organizational adoption.
 
 Among these volunteers are **programmers and software engineers** who participate in roles like "Besøksvenn" or "Nattvandrer". Through their firsthand experience, they see how **IT systems can improve daily operations and volunteer effectiveness**.
 
-However, the Red Cross currently lacks a structured way to **receive, evaluate, and integrate** the IT solutions these volunteers develop. When a volunteer creates something that solves a real problem locally, there's no streamlined way for the IT department to bring that solution into production. This results in a **loss of value** for the organization and **frustration** for both the volunteers and IT staff. What begins as a solution becomes a problem—simply because we don’t have the infrastructure to receive and adopt it.
+However, the Red Cross currently lacks a structured way to **receive, evaluate, and integrate** the IT solutions these volunteers develop. When a volunteer creates something that solves a real problem locally, there's no streamlined way for the IT department to bring that solution into production. This results in a **loss of value** for the organization and **frustration** for both the volunteers and IT staff. What begins as a solution becomes a problem—simply because we don't have the infrastructure to receive and adopt it.
 
 This document describes a solution: a **local development platform and workflow** that allows volunteers and developers—whether internal or external—to contribute effectively and securely.
 
