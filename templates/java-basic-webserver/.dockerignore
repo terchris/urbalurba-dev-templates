@@ -1,0 +1,54 @@
+# filename: templates/java-basic-webserver/.dockerignore
+# Docker ignore file for Java Spring Boot projects
+
+# Git
+.git
+.gitignore
+
+# Maven
+target/
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+!README.md
+
+# Docker
+.docker/
+Dockerfile
+.dockerignore
+
+# Kubernetes manifests
+manifests/
+
+# GitHub Actions
+.github/ 

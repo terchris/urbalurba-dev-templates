@@ -93,4 +93,4 @@ jobs:
           # Replace template variables in manifests
           sed -i "s/{{GITHUB_USERNAME}}/${{ github.repository_owner }}/g" manifests/*
           sed -i "s/{{REPO_NAME}}/${{ github.event.repository.name }}/g" manifests/*
-        if: always()  # Run even if previous steps fail
+        if: always()  # Run even if previous steps fail 

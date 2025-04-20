@@ -1,0 +1,53 @@
+# filename: .gitignore
+# Standard .NET ignores
+**/[Bb]in/
+**/[Oo]bj/
+*.suo
+*.user
+*.userosscache
+*.sln.iml
+*.nupkg
+.paket/
+packages/
+**/.vs/
+**/._*
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+out/
+msbuild.log
+*.log
+*.tlog
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.sublime-workspace
+
+# Docker ignore (already in .dockerignore but duplicated here)
+Dockerfile
+.dockerignore
+
+# Local development files
+update-devcontainer.sh
+urbalurba-scripts/
+
+# Solution file (if not needed)
+workspace.sln
+
+# Exceptions (keep these)
+!.devcontainer/
+!.github/
+!manifests/
+!src/WebApplication/Program.cs
+!src/WebApplication/WebApplication.csproj
+!Dockerfile
+!LICENSE
+!README*.md

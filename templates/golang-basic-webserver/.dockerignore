@@ -1,0 +1,44 @@
+# filename: templates/golang-basic-webserver/.dockerignore
+# Docker ignore file for Go projects
+
+# Git
+.git
+.gitignore
+
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Go specific
+vendor/
+go.work
+*.out
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+!README.md
+
+# Docker
+.docker/
+Dockerfile
+.dockerignore
+
+# Kubernetes manifests
+manifests/
+
+# GitHub Actions
+.github/ 

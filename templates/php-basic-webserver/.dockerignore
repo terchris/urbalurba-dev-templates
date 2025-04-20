@@ -1,0 +1,54 @@
+# filename: templates/php-basic-webserver/.dockerignore
+# Docker ignore file for PHP projects
+
+# Git
+.git
+.gitignore
+
+# Composer
+/vendor/
+composer.lock
+composer.phar
+
+# PHPUnit
+/phpunit.xml
+.phpunit.result.cache
+/coverage/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Cache
+*.cache
+.cache/
+
+# Documentation
+*.md
+!README.md
+
+# Docker
+.docker/
+Dockerfile
+.dockerignore
+
+# Kubernetes manifests
+manifests/
+
+# GitHub Actions
+.github/ 

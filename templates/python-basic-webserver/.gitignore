@@ -13,6 +13,21 @@ venv/
 .env
 .coverage
 htmlcov/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
 
 # OS specific
 .DS_Store
+Thumbs.db
+
+# Docker
+.docker/

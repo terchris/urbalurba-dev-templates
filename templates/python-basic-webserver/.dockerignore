@@ -1,14 +1,49 @@
 # filename: templates/python-basic-webserver/.dockerignore
 # Files and directories to be excluded from Docker builds
 
+# Git
 .git
-.devcontainer
-.devcontainer.extend
-__pycache__
-*.pyc
-*.pyo
-*.pyd
+.gitignore
+
+# Python specific
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
 .Python
 env/
 venv/
 .venv/
+.env
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+!README.md
+
+# Docker
+.docker/
+Dockerfile
+.dockerignore
+
+# Kubernetes manifests
+manifests/
+
+# GitHub Actions
+.github/

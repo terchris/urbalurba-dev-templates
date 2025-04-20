@@ -1,0 +1,53 @@
+# filename: templates/golang-basic-webserver/.github/workflows/urbalurba-build-and-push.yaml
+# GitHub Actions workflow for building and deploying the Go application
+#
+# This workflow is triggered on push to main branch and pull requests
+# It builds the Docker image and pushes it to GitHub Container Registry
+#
+# Template variables:
+# {{GITHUB_USERNAME}} - Will be replaced with the GitHub username from the repository URL
+# {{REPO_NAME}} - Will be replaced with the actual repository name
+
+name: Build and Deploy Go Web Server
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }} 
