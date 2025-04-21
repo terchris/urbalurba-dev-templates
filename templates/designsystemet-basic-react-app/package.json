@@ -1,0 +1,34 @@
+
+{
+  "name": "designsystemet-basic-react-app",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@digdir/designsystemet-css": "^0.9.0",
+    "@digdir/designsystemet-react": "^0.9.0",
+    "@digdir/designsystemet-theme": "^0.9.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "@storybook/addon-essentials": "^7.0.0",
+    "@storybook/addon-interactions": "^7.0.0",
+    "@storybook/addon-links": "^7.0.0",
+    "@storybook/blocks": "^7.0.0",
+    "@storybook/react": "^7.0.0",
+    "@storybook/react-vite": "^7.0.0",
+    "@storybook/testing-library": "^0.0.14-next.1",
+    "storybook": "^7.0.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  }
+}

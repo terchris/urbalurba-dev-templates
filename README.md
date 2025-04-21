@@ -13,18 +13,41 @@ Providing a seamless developer experience consistent with latest tooling and wor
 
 ## Available Templates
 
-| Template Type | TypeScript | Python | Java | C# | Go | PHP |
+The template types are:
+
+- **Backend Templates**: These are the basic templates that demonstrates how to use backend services like databases, message queues, serverless functions, object storage etc.
+- **Application Templates**: These are templates that are used to create a web applications.
+- **API Templates**: These are templates that requests data from APIs.
+
+## Backend Templates
+
+| Template Name | TypeScript | Python | Java | C# | Go | PHP |
 |--------------|------------|--------|------|----|----|-----|
-| **Basic Web Server** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Simple Database Integration** | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
-| **Database Integration** | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
-| **Message Queue** | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
-| **Serverless Functions** | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
-| **Object Storage** | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
+| **[Basic Web Server](templates/typescript-basic-webserver/README-typescript-basic-webserver.md)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Simple Database Integration** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+| **Database Integration** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+| **Message Queue** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+| **Serverless Functions** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+| **Object Storage** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+
+## Application Templates
+
+| Template Name | Designsystemet | TypeScript | React  | Storybook | NextJs | Strapi CMS | Okta authentication |
+|---------------|----------------|------------|--------|-----------|--------|------------|------|
+| **[Basic React App](templates/designsystemet-basic-react-app/README-designsystemet-basic-react-app.md)** | ✅ | ✅ | ✅ | ✅ |  |  |  |
+| **Basic NextJs App** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |  |  |
+
+## API Templates
+
+| Template Name | TypeScript | Python | Java | C# | Go | PHP |
+|--------------|------------|--------|------|----|----|-----|
+| **Red Cross Norway Organization API** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+
+
 
 ## Template Features
 
-| Template Type | Features | Description |
+| Template Name | Features | Description |
 |--------------|----------|-------------|
 | **Basic Web Server** | • Web page<br>• Local dev<br>• K8s deploy | A simple web server template that includes:<br>• Displays template name, current time, and "Hello World"<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
 | **Simple Database Integration** | • [SQLite](https://www.sqlite.org/)<br>• CRUD<br>• K8s deploy | Templates that include:<br>• [SQLite](https://www.sqlite.org/) database integration<br>• Create, Read, Update, Delete operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
@@ -32,10 +55,11 @@ Providing a seamless developer experience consistent with latest tooling and wor
 | **Message Queue** | • [Dapr](https://dapr.io/)<br>• Service-independent<br>• K8s deploy | Templates that implement:<br>• [Dapr](https://dapr.io/) integration with [RabbitMQ](https://www.rabbitmq.com/) in local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• Service-independent messaging (RabbitMQ, Kafka, Azure Service Bus, etc.)<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
 | **Serverless Functions** | • [Knative](https://knative.dev/)<br>• Auto-scale<br>• K8s deploy | Templates that implement:<br>• [Knative Functions](https://knative.dev/) for serverless execution<br>• Automatic scaling and event-driven architecture<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
 | **Object Storage** | • [MinIO](https://min.io/)<br>• S3-compatible<br>• K8s deploy | Templates that implement:<br>• [MinIO](https://min.io/) object storage in local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• S3-compatible API for file operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Basic React App** | • [Designsystemet](https://designsystemet.no/)<br>• [React](https://react.dev/)<br>• [Storybook](https://storybook.js.org/)<br>• K8s deploy | Templates that implement:<br>• [Designsystemet](https://designsystemet.no/) components<br>• [React](https://react.dev/) for building user interfaces<br>• [Storybook](https://storybook.js.org/) for component development<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
 
 ## Legend
 - ✅ Available
-- 🔜 Coming Soon
+- 🔄 Planned
 
 ### Case: Red Cross Norway volunteer developer platform
 
