@@ -1,8 +1,8 @@
 import React from 'react';
 import { Heading } from '@digdir/designsystemet-react';
-import { BlogCard } from './_components/blog-card/blog-card';
-import { blogPosts } from './data/blog-posts.json';
-import './styles/global.css';
+import { BlogCard } from './components/BlogCard/BlogCard';
+import { blogPosts } from './data/BlogPosts.json';
+import './App.css';
 import '@digdir/designsystemet-css/index.css';
 import '@digdir/designsystemet-theme';
 

@@ -1,6 +1,6 @@
 import { Card, CardBlock, Heading, Paragraph, Tag } from '@digdir/designsystemet-react';
-import { BlogPost } from '../../types/blog';
-import './blog-card.css';
+import { BlogPost } from '../../types/Blog';
+import './BlogCard.css';
 
 type BlogCardProps = {
   post: BlogPost;

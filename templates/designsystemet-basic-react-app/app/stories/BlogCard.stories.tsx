@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { BlogCard } from '../_components/blog-card/blog-card';
-import { blogPosts } from '../data/blog-posts.json';
+import { BlogCard } from '../components/BlogCard/BlogCard';
+import { blogPosts } from '../data/BlogPosts.json';
 
 const meta: Meta<typeof BlogCard> = {
   title: 'Components/Blog Card',
