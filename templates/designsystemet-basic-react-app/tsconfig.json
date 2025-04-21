@@ -15,7 +15,10 @@
       "noUnusedLocals": true,
       "noUnusedParameters": true,
       "noFallthroughCasesInSwitch": true,
-      "types": ["@digdir/designsystemet-theme", "@digdir/designsystemet-react/react-types"]
+      "types": ["node"],
+      "verbatimModuleSyntax": true,
+      "allowArbitraryExtensions": true,
+      "exactOptionalPropertyTypes": true
     },
     "include": ["app"],
     "references": [{ "path": "./tsconfig.node.json" }]

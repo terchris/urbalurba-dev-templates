@@ -6,13 +6,29 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
+    '@storybook/addon-a11y',
+    '@storybook/addon-viewport',
   ],
   framework: {
     name: '@storybook/react-vite',
-    options: {},
+    options: {
+      builder: {
+        viteConfigPath: './vite.config.ts',
+      },
+    },
   },
   docs: {
-    autodocs: 'tag',
+    autodocs: true,
+    defaultName: 'Documentation',
+  },
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+    check: true,
+  },
+  staticDirs: ['../public'],
+  features: {
+    storyStoreV7: true,
+    buildStoriesJson: true,
   },
 };
 
