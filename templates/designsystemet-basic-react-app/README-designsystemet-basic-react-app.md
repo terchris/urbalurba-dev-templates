@@ -4,9 +4,13 @@ File: templates/designsystemet-basic-react-app/README-designsystemet-basic-react
 
 This is a simple React application template that integrates the [Designsystemet](https://github.com/digdir/designsystemet) from Digdir to create a blog page. The template displays a list of blog posts as cards, each with a title, excerpt, date, and an image, sourced from a JSON file.
 
+Screenshot of the simple blog page:
+
+![Screenshot of the simple blog page](./doc/screenshot.png)
+
 ## Purpose
 
-The purpose of this template is to provide a minimal starting point for developers who want to build a blog page using Designsystemet's components and styling. It demonstrates how to set up a React app with Designsystemet, use its components (e.g., Card, Heading, Paragraph), and structure data for a blog using a JSON file.
+The purpose of this template is to provide a minimal starting point for developers who want to build a blog page using Designsystemet's components and styling. It demonstrates how to set up a React/Vite app with Designsystemet, use its components (e.g., Card, Heading, Paragraph), and structure data for a blog using a JSON file.
 
 ## Features
 
@@ -16,7 +20,6 @@ The purpose of this template is to provide a minimal starting point for develope
 - Built with Vite and React for fast development and modern tooling.
 - TypeScript support for type-safe development.
 - Inter font integration as recommended by Designsystemet.
-- Storybook integration for previewing Designsystemet components.
 
 ## Prerequisites
 
@@ -48,54 +51,32 @@ npm run dev
 You will see the following output:
 
 ```plaintext
-TODO: Add output
+npm install
+
+added 163 packages, and audited 164 packages in 1m
+
+44 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+npm run dev
+
+> designsystemet-basic-react-app@0.0.0 dev
+> vite
+
+
+  VITE v6.3.2  ready in 1234 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://172.17.0.2:3000/
+  ➜  press h + enter to show help
+
 ```
 
 This means the server is running and listening on port 3000. You can access it by navigating to `http://localhost:3000` in your web browser.
 You will see the sample list of blog posts.
 
-### Storybook
-
-TODO: Add instructions for how to use Storybook to preview Designsystemet components.
-
-```bash
-npm run storybook
-```
-
-Open http://localhost:6006 in your browser to access the Storybook interface. Here, you can explore the components used in this template (e.g., Card, Heading, Paragraph) and see their props and variations as provided by Designsystemet's Storybook documentation.
-
-### Adding blog posts
-
-Blog Data: The blog posts are stored in app/data/blog-posts.json. Update this file to add or modify posts. Each post includes:
-
-- id: Unique identifier (string).
-- title: Post title (string).
-- excerpt: Short summary (string).
-- date: Publication date (string, e.g., "2025-04-20").
-- imageUrl: URL or path to the post's image (string).
-
-Example:
-
-```json
-[
-  {
-    "id": "1",
-    "title": "Exploring Designsystemet",
-    "excerpt": "A look into Digdir's Designsystemet for building accessible UIs.",
-    "date": "2025-04-20",
-    "imageUrl": "/images/exploring-designsystemet.webp"
-  }
-]
-```
-
-### Changing the blog page
-
-- **Customizing the UI**: Modify app/App.tsx to adjust the blog page layout or add new components. Use Designsystemet's components from @digdir/designsystemet-react (e.g., Card, Heading, Paragraph) and styles from @digdir/designsystemet-css.
-- **Theming**: The template uses Designsystemet's default digdir theme. To create a custom theme, visit the Designsystemet Theme Builder and follow the instructions to generate and import your theme.
-- **Using Storybook**: Storybook provides a sandbox to explore Designsystemet components. After running npm run storybook, navigate to the Storybook URL (http://localhost:6006). You can:
-  - View component documentation and props.
-  - Test different component states and variants.
-  - Use the components listed in Designsystemet's Storybook to build new features or customize the blog page.
 
 
 ## Deploying to Kubernetes on your local machine
@@ -105,40 +86,41 @@ TODO: Add instructions for deploying to Kubernetes on your local machine.
 ## File structure
 
 ```plaintext
-templates/designsystemet-basic-react-app/
-├── package.json
-├── tsconfig.json
-├── vite.config.ts
-├── .storybook/
-│   └── main.ts
 ├── public/
-│   └── images/
-│       ├── exploring-designsystemet.webp
-│       ├── creating-custom-themes.webp
-│       └── accessible-components.webp
-├── app/
+│   ├── images/
+│   │   ├── exploring-designsystemet.webp
+│   │   ├── creating-custom-themes.webp
+│   │   └── accessible-components.webp
+│   └── vite.svg
+├── src/
 │   ├── App.tsx
+│   ├── App.css
 │   ├── main.tsx
-│   ├── app.css
+│   ├── index.css
+│   ├── vite-env.d.ts
 │   ├── data/
 │   │   └── blog-posts.json
-│   ├── _components/
-│   │   └── blog-card/
-│   │       ├── blog-card.tsx
-│   │       └── blog-card.css
-│   ├── stories/
-│   │   └── blog-card.stories.tsx
+│   ├── components/
+│   │   └── BlogCard/
+│   │       ├── BlogCard.tsx
+│   │       └── BlogCard.module.css
 │   └── types/
-│       └── blog.ts
-├── .dockerignore                # Ignore files for Docker build
-├── .gitignore                  # Ignore files for Git
-├── .github/
-│   └── workflows/
-│       └── urbalurba-build-and-push.yaml  # GitHub Actions CI
-├── Dockerfile                   # Container build for app
+│       └── BlogPost.ts
+├── .dockerignore
+├── .gitignore
+├── LICENSE
+├── Dockerfile
+├── index.html
+├── package.json
+├── package-lock.json
+├── eslint.config.js
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.node.json
+├── vite.config.ts
 ├── manifests/
-│   ├── deployment.yaml          # K8s deployment
-│   ├── ingress.yaml             # Traefik ingress
-│   └── kustomization.yaml       # For ArgoCD compatibility
+│   ├── deployment.yaml
+│   ├── ingress.yaml
+│   └── kustomization.yaml
 └── README-designsystemet-basic-react-app.md
 ```

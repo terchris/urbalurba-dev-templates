@@ -1,0 +1,25 @@
+/**
+ * @file src/components/BlogCard/BlogCard.module.css
+ * @description Styles for the BlogCard component
+ * @author [@terchris]
+ */
+
+.image {
+    aspect-ratio: 16 / 9;
+}
+
+.meta {
+    display: flex;
+    gap: var(--ds-size-3);
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: 14px !important;
+}
+  
+.metaSquare {
+    width: 7px;
+    height: 7px;
+    transform: rotate(45deg);
+    border-radius: 1px;
+    background-color: var(--ds-color-brand1-border-subtle);
+    margin: auto;
+}

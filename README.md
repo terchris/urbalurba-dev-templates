@@ -11,57 +11,7 @@ A developer should be free to write code and not worry about the underlying infr
 Urbalurba-infrastructure sets up a local kubernetes cluster that follow the latest GitOps principles and provides a set of tools that makes it easy to develop, test and deploy applications.
 Providing a seamless developer experience consistent with latest tooling and workflows.
 
-## Available Templates
-
-The template types are:
-
-- **Backend Templates**: These are the basic templates that demonstrates how to use backend services like databases, message queues, serverless functions, object storage etc.
-- **Application Templates**: These are templates that are used to create a web applications.
-- **API Templates**: These are templates that requests data from APIs.
-
-## Backend Templates
-
-| Template Name | TypeScript | Python | Java | C# | Go | PHP |
-|--------------|------------|--------|------|----|----|-----|
-| **[Basic Web Server](templates/typescript-basic-webserver/README-typescript-basic-webserver.md)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Simple Database Integration** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
-| **Database Integration** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
-| **Message Queue** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
-| **Serverless Functions** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
-| **Object Storage** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
-
-## Application Templates
-
-| Template Name | Designsystemet | TypeScript | React  | Storybook | NextJs | Strapi CMS | Okta authentication |
-|---------------|----------------|------------|--------|-----------|--------|------------|------|
-| **[Basic React App](templates/designsystemet-basic-react-app/README-designsystemet-basic-react-app.md)** | ✅ | ✅ | ✅ | ✅ |  |  |  |
-| **Basic NextJs App** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |  |  |
-
-## API Templates
-
-| Template Name | TypeScript | Python | Java | C# | Go | PHP |
-|--------------|------------|--------|------|----|----|-----|
-| **Red Cross Norway Organization API** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
-
-
-
-## Template Features
-
-| Template Name | Features | Description |
-|--------------|----------|-------------|
-| **Basic Web Server** | • Web page<br>• Local dev<br>• K8s deploy | A simple web server template that includes:<br>• Displays template name, current time, and "Hello World"<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
-| **Simple Database Integration** | • [SQLite](https://www.sqlite.org/)<br>• CRUD<br>• K8s deploy | Templates that include:<br>• [SQLite](https://www.sqlite.org/) database integration<br>• Create, Read, Update, Delete operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
-| **Database Integration** | • [Postgres](https://www.postgresql.org/)<br>• CRUD<br>• K8s deploy | Templates that include:<br>• [PostgreSQL](https://www.postgresql.org/) database integration using local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• Create, Read, Update, Delete operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
-| **Message Queue** | • [Dapr](https://dapr.io/)<br>• Service-independent<br>• K8s deploy | Templates that implement:<br>• [Dapr](https://dapr.io/) integration with [RabbitMQ](https://www.rabbitmq.com/) in local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• Service-independent messaging (RabbitMQ, Kafka, Azure Service Bus, etc.)<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
-| **Serverless Functions** | • [Knative](https://knative.dev/)<br>• Auto-scale<br>• K8s deploy | Templates that implement:<br>• [Knative Functions](https://knative.dev/) for serverless execution<br>• Automatic scaling and event-driven architecture<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
-| **Object Storage** | • [MinIO](https://min.io/)<br>• S3-compatible<br>• K8s deploy | Templates that implement:<br>• [MinIO](https://min.io/) object storage in local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• S3-compatible API for file operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
-| **Basic React App** | • [Designsystemet](https://designsystemet.no/)<br>• [React](https://react.dev/)<br>• [Storybook](https://storybook.js.org/)<br>• K8s deploy | Templates that implement:<br>• [Designsystemet](https://designsystemet.no/) components<br>• [React](https://react.dev/) for building user interfaces<br>• [Storybook](https://storybook.js.org/) for component development<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
-
-## Legend
-- ✅ Available
-- 🔄 Planned
-
-### Case: Red Cross Norway volunteer developer platform
+## Case: Red Cross Norway volunteer developer platform
 
 The Norwegian Red Cross supports over **40,000 volunteers** across **380+ local branches**, many of whom have technical skills and see opportunities for IT improvements. This solution creates a streamlined path for these volunteers to develop, test, and contribute IT solutions that can ultimately be adopted by the organization, enabling a better flow from volunteer innovation to organizational adoption.
 
@@ -71,9 +21,9 @@ However, the Red Cross currently lacks a structured way to **receive, evaluate, 
 
 This document describes a solution: a **local development platform and workflow** that allows volunteers and developers—whether internal or external—to contribute effectively and securely.
 
-## Benefits
+### Benefits
 
-### For Volunteers and Developers
+#### For Volunteers and Developers
 
 - **Lower barrier to entry** for technical volunteers and new developers
 - **Self-service setup** that reduces onboarding time
@@ -81,7 +31,7 @@ This document describes a solution: a **local development platform and workflow*
 - **Familiar tools** like VS Code, GitHub, and modern frameworks
 - **Production-like environment** for testing applications
 
-### For Red Cross IT Department
+#### For Red Cross IT Department
 
 - **Predictable and maintainable** application structure
 - **Standardized project templates** that follow best practices
@@ -89,7 +39,7 @@ This document describes a solution: a **local development platform and workflow*
 - **Scalable model** that supports multiple projects and contributors
 - **Reduced integration overhead** when adopting volunteer-created solutions
 
-### For the Organization
+#### For the Organization
 
 - **Harness volunteer technical skills** more effectively
 - **Accelerate innovation** from field operations to organization-wide solutions
@@ -97,13 +47,64 @@ This document describes a solution: a **local development platform and workflow*
 - **Ensure security and compliance** through standardized infrastructure
 - **Enable collaboration** between volunteers, staff, and external partners
 
-## Conclusion
+### Conclusion
 
 By providing a simple, flexible, and powerful local development setup, the Norwegian Red Cross can harness the technical skills of its volunteers and staff to build better systems. With GitOps and Kubernetes as the foundation, and with automation and templates smoothing the path, we can ensure that good ideas from the field don't get lost—they get adopted, improved, and brought into production.
 
 This platform enables collaboration, learning, and innovation—and most importantly, helps support volunteers more effectively as they help others. The ArgoCD integration creates a seamless development experience for Red Cross developers and volunteers, allowing them to focus on building valuable solutions instead of dealing with complex infrastructure.
 
 The GitOps approach ensures consistent, automated deployments while the scripted setup minimizes the learning curve. By implementing this strategy, the Red Cross platform will meet the goals outlined in the project overview: enabling volunteers to contribute effectively, providing a consistent development environment, and ensuring that good ideas can be quickly brought into production.
+
+## Technical Details
+
+### Templates
+
+The template types are:
+
+- **Backend Templates**: These are the basic templates that demonstrates how to use backend services like databases, message queues, serverless functions, object storage etc.
+- **Application Templates**: These are templates that are used to create a web applications.
+- **API Templates**: These are templates that requests data from APIs.
+
+### Backend Templates
+
+| Template Name | TypeScript | Python | Java | C# | Go | PHP |
+|--------------|------------|--------|------|----|----|-----|
+| **[Basic Web Server](templates/typescript-basic-webserver/README-typescript-basic-webserver.md)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Simple Database Integration** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+| **Database Integration** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+| **Message Queue** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+| **Serverless Functions** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+| **Object Storage** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+| **Application logging** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+
+### Application Templates
+
+| Template Name | Designsystemet | TypeScript | React  | Storybook | NextJs | Strapi CMS | Okta authentication |
+|---------------|----------------|------------|--------|-----------|--------|------------|------|
+| **[Basic React App](templates/designsystemet-basic-react-app/README-designsystemet-basic-react-app.md)** | ✅ | ✅ | ✅ |  |  |  |  |
+| **Basic NextJs App** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |  |  |
+
+### API Templates
+
+| Template Name | TypeScript | Python | Java | C# | Go | PHP |
+|--------------|------------|--------|------|----|----|-----|
+| **Red Cross Norway Organization API** | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 | 🔄 |
+
+### Template Features
+
+| Template Name | Features | Description |
+|--------------|----------|-------------|
+| **Basic Web Server** | • Web page<br>• Local dev<br>• K8s deploy | A simple web server template that includes:<br>• Displays template name, current time, and "Hello World"<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Simple Database Integration** | • [SQLite](https://www.sqlite.org/)<br>• CRUD<br>• K8s deploy | Templates that include:<br>• [SQLite](https://www.sqlite.org/) database integration<br>• Create, Read, Update, Delete operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Database Integration** | • [Postgres](https://www.postgresql.org/)<br>• CRUD<br>• K8s deploy | Templates that include:<br>• [PostgreSQL](https://www.postgresql.org/) database integration using local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• Create, Read, Update, Delete operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Message Queue** | • [Dapr](https://dapr.io/)<br>• Service-independent<br>• K8s deploy | Templates that implement:<br>• [Dapr](https://dapr.io/) integration with [RabbitMQ](https://www.rabbitmq.com/) in local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• Service-independent messaging (RabbitMQ, Kafka, Azure Service Bus, etc.)<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Serverless Functions** | • [Knative](https://knative.dev/)<br>• Auto-scale<br>• K8s deploy | Templates that implement:<br>• [Knative Functions](https://knative.dev/) for serverless execution<br>• Automatic scaling and event-driven architecture<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Object Storage** | • [MinIO](https://min.io/)<br>• S3-compatible<br>• K8s deploy | Templates that implement:<br>• [MinIO](https://min.io/) object storage in local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop)<br>• S3-compatible API for file operations<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+| **Basic React App** | • [Designsystemet](https://designsystemet.no/)<br>• [React](https://react.dev/)<br>• [Vite](https://vitejs.dev/)<br>• K8s deploy | Templates that implement:<br>• [Designsystemet](https://designsystemet.no/) components<br>• [React](https://react.dev/) for building user interfaces<br>• [Vite](https://vitejs.dev/) for development<br>• Development setup for local development<br>• Automatic deployment to local [Kubernetes cluster](https://www.rancher.com/products/rancher-desktop) |
+
+## Legend
+- ✅ Available
+- 🔄 Planned
 
 ## Architecture Overview
 
@@ -195,19 +196,22 @@ You'll need a GitHub Personal Access Token with appropriate permissions:
 For detailed instructions, see the [official GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
 
 Keep the token secure and do not share it with anyone. It is used to authenticate your GitHub account and access your repositories.
-You can set it as an environment variable in your shell like this:
+
+**Set the GITHUB_PAT on your host machine, not inside the devcontainer.**
+
+macOS/Linux:
 
 ```bash
-export GITHUB_PAT=your_personal_access_token
+./urbalurba-scripts/set-github-pat.sh ghp_yourToken
 ```
 
-Check that the token is set correctly:
+Windows (CMD only):
 
-```bash
-echo $GITHUB_PAT
+```bat
+urbalurba-scripts\set-github-pat.bat ghp_yourToken
 ```
 
-Set the GITHUB_PAT on your host machine, not inside the devcontainer. The token is used by the `provision-host` container to authenticate with GitHub and deploy the application to the local Kubernetes cluster. Keep it safe, you might need it next time you create a new project. 
+The token is used by the `provision-host` container to authenticate with GitHub and deploy the application to the local Kubernetes cluster.
 
 ## Setting up for local development
 
