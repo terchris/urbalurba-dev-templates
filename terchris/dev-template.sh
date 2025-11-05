@@ -61,12 +61,12 @@
 #   3 - Update check failed
 #   4 - Devcontainer update failed
 #
-# Version: 1.0.0
+# Version: 1.1.0
 #------------------------------------------------------------------------------
 set -e
 
 # Script version - increment this when making changes
-SCRIPT_VERSION="1.0.0"
+SCRIPT_VERSION="1.1.0"
 
 #------------------------------------------------------------------------------
 # Fetch and update the script from repository
@@ -236,69 +236,173 @@ function clone_template_repo() {
 }
 
 #------------------------------------------------------------------------------
+# Read template metadata from TEMPLATE_INFO file
+#------------------------------------------------------------------------------
+function read_template_info() {
+  local template_dir="$1"
+  local info_file="$template_dir/TEMPLATE_INFO"
+  
+  # Initialize variables with defaults
+  INFO_TEMPLATE_NAME=$(basename "$template_dir")
+  INFO_TEMPLATE_DESCRIPTION="No description available"
+  INFO_TEMPLATE_CATEGORY="UNCATEGORIZED"
+  INFO_TEMPLATE_PURPOSE=""
+  
+  # Read TEMPLATE_INFO file if it exists
+  if [ -f "$info_file" ]; then
+    # Source the file to get variables, then rename them
+    source "$info_file"
+    INFO_TEMPLATE_NAME="$TEMPLATE_NAME"
+    INFO_TEMPLATE_DESCRIPTION="$TEMPLATE_DESCRIPTION"
+    INFO_TEMPLATE_CATEGORY="$TEMPLATE_CATEGORY"
+    INFO_TEMPLATE_PURPOSE="$TEMPLATE_PURPOSE"
+  fi
+}
+
+#------------------------------------------------------------------------------
 # Get available templates and select one
 #------------------------------------------------------------------------------
 function select_template() {
-  # Get a list of available templates
-  TEMPLATES=()
+  # Arrays to store template information
+  declare -a TEMPLATE_DIRS=()
+  declare -a TEMPLATE_NAMES=()
+  declare -a TEMPLATE_DESCRIPTIONS=()
+  declare -a TEMPLATE_CATEGORIES=()
+  declare -a TEMPLATE_PURPOSES=()
+  
+  # Associative arrays to group templates by category
+  declare -A CATEGORY_WEB_SERVER=()
+  declare -A CATEGORY_WEB_APP=()
+  declare -A CATEGORY_OTHER=()
+  
+  # Read all templates and their metadata
+  echo "📋 Loading available templates..."
   for dir in "$TEMPLATE_REPO_NAME/templates"/*; do
     if [ -d "$dir" ]; then
-      TEMPLATE_NAME=$(basename "$dir")
-      TEMPLATES+=("$TEMPLATE_NAME")
+      read_template_info "$dir"
+      
+      DIR_NAME=$(basename "$dir")
+      TEMPLATE_DIRS+=("$DIR_NAME")
+      TEMPLATE_NAMES+=("$INFO_TEMPLATE_NAME")
+      TEMPLATE_DESCRIPTIONS+=("$INFO_TEMPLATE_DESCRIPTION")
+      TEMPLATE_CATEGORIES+=("$INFO_TEMPLATE_CATEGORY")
+      TEMPLATE_PURPOSES+=("$INFO_TEMPLATE_PURPOSE")
+      
+      # Group by category
+      case "$INFO_TEMPLATE_CATEGORY" in
+        WEB_SERVER)
+          CATEGORY_WEB_SERVER["$DIR_NAME"]="$INFO_TEMPLATE_NAME|$INFO_TEMPLATE_DESCRIPTION"
+          ;;
+        WEB_APP)
+          CATEGORY_WEB_APP["$DIR_NAME"]="$INFO_TEMPLATE_NAME|$INFO_TEMPLATE_DESCRIPTION"
+          ;;
+        *)
+          CATEGORY_OTHER["$DIR_NAME"]="$INFO_TEMPLATE_NAME|$INFO_TEMPLATE_DESCRIPTION"
+          ;;
+      esac
     fi
   done
-
-  if [ ${#TEMPLATES[@]} -eq 0 ]; then
+  
+  if [ ${#TEMPLATE_DIRS[@]} -eq 0 ]; then
     echo "❌ No templates found in repository."
     echo "Removing template repository folder: $TEMP_DIR"
     rm -rf "$TEMP_DIR"
     exit 1
   fi
-
+  
   # If a template name is provided as a parameter, use it
-  # Otherwise, list available templates and let the user select one
   if [ -n "$1" ]; then
     TEMPLATE_NAME="$1"
     # Check if the specified template exists
     if [ ! -d "$TEMPLATE_REPO_NAME/templates/$TEMPLATE_NAME" ]; then
       echo "❌ Template '$TEMPLATE_NAME' not found in repository."
-      echo "Available templates:"
-      for i in "${!TEMPLATES[@]}"; do
-        echo "  $(($i + 1)). ${TEMPLATES[$i]}"
-      done
+      echo ""
+      display_template_menu
       echo "Removing template repository folder: $TEMP_DIR"
       rm -rf "$TEMP_DIR"
       exit 1
     fi
   else
-    # No template specified, show list
-    echo "Available templates:"
-    for i in "${!TEMPLATES[@]}"; do
-      echo "  $(($i + 1)). ${TEMPLATES[$i]}"
-    done
+    # No template specified, show categorized list
+    display_template_menu
     
     # Ask user to select a template
     while true; do
       echo ""
-      read -p "Select template (1-${#TEMPLATES[@]}): " TEMPLATE_SELECTION
+      read -p "Select template (1-${#TEMPLATE_DIRS[@]}): " TEMPLATE_SELECTION
       
       # Check if the input is a number
       if [[ "$TEMPLATE_SELECTION" =~ ^[0-9]+$ ]]; then
         # Check if the number is in range
-        if [ "$TEMPLATE_SELECTION" -ge 1 ] && [ "$TEMPLATE_SELECTION" -le ${#TEMPLATES[@]} ]; then
+        if [ "$TEMPLATE_SELECTION" -ge 1 ] && [ "$TEMPLATE_SELECTION" -le ${#TEMPLATE_DIRS[@]} ]; then
           # Convert selection to array index (0-based)
           TEMPLATE_INDEX=$(($TEMPLATE_SELECTION - 1))
-          TEMPLATE_NAME="${TEMPLATES[$TEMPLATE_INDEX]}"
+          TEMPLATE_NAME="${TEMPLATE_DIRS[$TEMPLATE_INDEX]}"
+          
+          # Show template purpose if available
+          if [ -n "${TEMPLATE_PURPOSES[$TEMPLATE_INDEX]}" ]; then
+            echo ""
+            echo "📝 About this template:"
+            echo "${TEMPLATE_PURPOSES[$TEMPLATE_INDEX]}"
+          fi
           break
         fi
       fi
       
-      echo "❌ Invalid selection. Please enter a number between 1 and ${#TEMPLATES[@]}."
+      echo "❌ Invalid selection. Please enter a number between 1 and ${#TEMPLATE_DIRS[@]}."
     done
   fi
 
-  echo "Selected template: $TEMPLATE_NAME"
+  echo ""
+  echo "✅ Selected template: ${TEMPLATE_NAMES[$TEMPLATE_INDEX]}"
   TEMPLATE_PATH="$TEMPLATE_REPO_NAME/templates/$TEMPLATE_NAME"
+}
+
+#------------------------------------------------------------------------------
+# Display template menu grouped by category
+#------------------------------------------------------------------------------
+function display_template_menu() {
+  local counter=1
+  
+  echo ""
+  echo "📚 Available Templates:"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  
+  # Display Web Server templates
+  if [ ${#CATEGORY_WEB_SERVER[@]} -gt 0 ]; then
+    echo ""
+    echo "🌐 Web Server Templates:"
+    for dir_name in "${!CATEGORY_WEB_SERVER[@]}"; do
+      IFS='|' read -r name desc <<< "${CATEGORY_WEB_SERVER[$dir_name]}"
+      printf "  %2d. %-35s - %s\n" "$counter" "$name" "$desc"
+      counter=$((counter + 1))
+    done
+  fi
+  
+  # Display Web App templates
+  if [ ${#CATEGORY_WEB_APP[@]} -gt 0 ]; then
+    echo ""
+    echo "📱 Web Application Templates:"
+    for dir_name in "${!CATEGORY_WEB_APP[@]}"; do
+      IFS='|' read -r name desc <<< "${CATEGORY_WEB_APP[$dir_name]}"
+      printf "  %2d. %-35s - %s\n" "$counter" "$name" "$desc"
+      counter=$((counter + 1))
+    done
+  fi
+  
+  # Display Other templates
+  if [ ${#CATEGORY_OTHER[@]} -gt 0 ]; then
+    echo ""
+    echo "📦 Other Templates:"
+    for dir_name in "${!CATEGORY_OTHER[@]}"; do
+      IFS='|' read -r name desc <<< "${CATEGORY_OTHER[$dir_name]}"
+      printf "  %2d. %-35s - %s\n" "$counter" "$name" "$desc"
+      counter=$((counter + 1))
+    done
+  fi
+  
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 }
 
 #------------------------------------------------------------------------------
